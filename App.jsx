@@ -16,7 +16,7 @@ export default function App() {
 
     const [currentNoteId, setCurrentNoteId] = React.useState("")
 
-    console.log(notesCollection)
+    console.log("NotesCollection:" + notesCollection)
 
     const currentNote =
         notes.find(note => note.id === currentNoteId)

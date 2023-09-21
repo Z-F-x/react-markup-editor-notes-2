@@ -36,12 +36,21 @@ export default function App() {
      */
 
     // const sortedNotes = []
-
+    var sortBy = []
     let sortetNotes = []
      sortetNotes = notes.map(function(note){
-        return note.createdAt
-    })
-    console.log("Sorted Array:" + sortetNotes.sort())
+        sortBy.push(note)
+        sortBy.sort(function(a,b){
+            // Turn your strings into dates, and then subtract them
+            // to get a value that is either negative, positive, or zero.
+            return new Date(b.updatedAt) - new Date(a.updatedAt);
+          }).reverse();
+
+     })
+        console.log(sortBy.reverse())
+
+
+    console.log("Sorted Array:" + sortetNotes)
 
     React.useEffect(() => {
         const unsubscribe = onSnapshot(notesCollection, function (snapshot) {
@@ -97,7 +106,7 @@ export default function App() {
                         className="split"
                     >
                         <Sidebar
-                            notes={notes}
+                            notes={sortBy}
                             currentNote={currentNote}
                             setCurrentNoteId={setCurrentNoteId}
                             newNote={createNewNote}

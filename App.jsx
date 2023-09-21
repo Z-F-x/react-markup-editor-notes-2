@@ -15,27 +15,24 @@ export default function App() {
     const [notes, setNotes] = React.useState([])
 
     const [currentNoteId, setCurrentNoteId] = React.useState("")
+    const [tempNoteText, setTempNoteText] = React.useState("")
+
 
 
     const currentNote =
         notes.find(note => note.id === currentNoteId)
         || notes[0]
+// For some reason så måtte det en if() til for at nettleseren klart å lese `.body`
+        React.useEffect(() => {
+            if (currentNote) {
+                setTempNoteText(currentNote.body)
+            }
+        }, [currentNote])
 
 
-    /**
-     * Challenge:
-     * 1. ✅ Add createdAt and updatedAt properties to the notes
-     *    When a note is first created, set the `createdAt` and `updatedAt`
-     *    properties to `Date.now()`. Whenever a note is modified, set the
-     *    `updatedAt` property to `Date.now()`.
-     * 
-     * 2. Create a new `sortedNotes` array (doesn't need to be saved 
-     *    in state) that orders the items in the array from 
-     *    most-recently-updated to least-recently-updated.
-     *    This may require a quick Google search.
-     */
 
-    // const sortedNotes = []
+
+
     var sortBy = []
     let sortetNotes = []
      sortetNotes = notes.map(function(note){
@@ -44,13 +41,20 @@ export default function App() {
             // Turn your strings into dates, and then subtract them
             // to get a value that is either negative, positive, or zero.
             return new Date(b.updatedAt) - new Date(a.updatedAt);
-          }).reverse();
+          });
 
      })
-        console.log(sortBy.reverse())
 
 
-    console.log("Sorted Array:" + sortetNotes)
+    React.useEffect(()=>{
+        const timeoutId = setTimeout(()=>{
+            if(tempNoteText !== currentNote.body){
+                updateNote(tempNoteText)
+            }
+        }, 500)
+        return () => clearTimeout(timeoutId)
+    }, [tempNoteText])
+
 
     React.useEffect(() => {
         const unsubscribe = onSnapshot(notesCollection, function (snapshot) {
@@ -115,8 +119,8 @@ export default function App() {
                         {
            
                             <Editor
-                                currentNote={currentNote}
-                                updateNote={updateNote}
+                               tempNoteText={tempNoteText}
+                            setTempNoteText={setTempNoteText}
                             />
                         }
                     </Split>

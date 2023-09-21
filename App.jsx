@@ -37,7 +37,7 @@ export default function App() {
 
     // const sortedNotes = []
 
-    const sortetNotes = []
+    let sortetNotes = []
      sortetNotes = notes.map(function(note){
         return note.createdAt
     })

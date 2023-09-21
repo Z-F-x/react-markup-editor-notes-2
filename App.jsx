@@ -38,9 +38,9 @@ export default function App() {
     // const sortedNotes = []
 
     const sortetNotes = notes.map(function(note){
-        return note.sort(createdAt)
+        return note.createdAt
     })
-    console.log("Sorted Array:" + sortetNotes)
+    console.log("Sorted Array:" + sortetNotes.sort())
 
     React.useEffect(() => {
         const unsubscribe = onSnapshot(notesCollection, function (snapshot) {

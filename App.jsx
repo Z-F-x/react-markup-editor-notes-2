@@ -16,7 +16,6 @@ export default function App() {
 
     const [currentNoteId, setCurrentNoteId] = React.useState("")
 
-    console.log("NotesCollection:" + notesCollection)
 
     const currentNote =
         notes.find(note => note.id === currentNoteId)
@@ -38,6 +37,7 @@ export default function App() {
 
     // const sortedNotes = []
 
+    console.log(notes)
 
     React.useEffect(() => {
         const unsubscribe = onSnapshot(notesCollection, function (snapshot) {
